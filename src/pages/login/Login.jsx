@@ -1,12 +1,23 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { loginUser} = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!email || !password) {
+      alert("Email and password are required");
+      return;
+    }
+    const res = await loginUser(email, password);
+    setTimeout( function ( ) { alert( "Login satisfactori" ); }, 1000 );
     console.log("Login submitted:", { email, password });
   };
 
