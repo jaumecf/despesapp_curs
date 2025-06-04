@@ -1,12 +1,15 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Inici from './pages/inici/Inici';
-import Login from './pages/login/Login';
+import Inici from './pages/Inici';
+import Login from './pages/Login';
 import Navbar from './components/navbar/Navbar';
 import DespesesDetall from './components/despesesDetall/DespesesDetall';
-import Register from './pages/register/Register';
+import Register from './pages/Register';
 import AuthProvider from './context/authProvider';
 import ProtectedRoute from './context/protectedRoute';
+import ProjectPage from './pages/ProjectPage';
+import HomePage from './pages/HomePage';
+
 
 
 function App() {
@@ -17,10 +20,13 @@ function App() {
         <AuthProvider>
           <Navbar />
             <Routes>
-              <Route path='/' element={<ProtectedRoute><Inici /></ProtectedRoute>} />
+              <Route path='/' element={<Inici />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
-              <Route path='/despesa/:id' element={<DespesesDetall />} />
+              <Route path="/projects" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+              <Route path='/project/:id' element={<ProtectedRoute><ProjectPage /></ProtectedRoute>} />
+              <Route path='/despesa/:id' element={<ProtectedRoute><DespesesDetall /></ProtectedRoute>} />
+              <Route path='*' element={<Navigate to="/" replace />} />
             </Routes>
         </AuthProvider>
       </Router>

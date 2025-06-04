@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
-import DespesesLlista from '../../components/despesesLlista/DespesesLlista';
-import Modal from '../../components/modal/Modal';
-import DespesaForm from '../../components/despesaForm/DespesaForm';
+import DespesesLlista from '../components/despesesLlista/DespesesLlista';
+import Modal from '../components/modal/Modal';
+import DespesaForm from '../components/despesaForm/DespesaForm';
 
-import { onGetCollection, deleteDespesa, saveDespesa } from '../../firebase/firebase';
-import { useCollection } from '../../hooks/useCollection';
+import { onGetCollection, deleteDespesa, saveDespesa } from '../firebase/firebase';
+import { useCollection } from '../hooks/useCollection';
 
-export default function Inici() {
+export default function ProjectPage() {
     const [mostraModal, setMostraModal] = useState(false);
     const { documents: despeses } = useCollection('despeses');
     //const [despeses, setDespeses] = useState(null);

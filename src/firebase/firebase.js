@@ -32,3 +32,24 @@ export const onGetDespesa = (id, callback) =>
 export const deleteDespesa = async (id) => {
   deleteDoc(doc(db, "despeses", id));
 }
+
+export const getProjectes = () =>
+  getDocs(collection(db, "projectes"));
+
+export const saveProjecte = async (projecte) => {
+  const docRef = await addDoc(collection(db, "projectes"), projecte);
+  return docRef.id;
+}
+
+export const deleteProjecte = async (id) => {
+  // Elimina totes les despeses relacionades
+  const despesesSnap = await getDocs(collection(db, "projectes", projectId, "despeses"));
+  for (const despesaDoc of despesesSnap.docs) {
+      await deleteDespesa(despesaDoc.ref);
+  }
+
+  // Elimina el projecte
+  await deleteDoc(doc(db, "projectes", projectId));
+}
+export const getProjecte = (id) =>
+  getDocs(doc(db, "projectes", id));

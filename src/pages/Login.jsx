@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authProvider';
 
 
 
@@ -18,6 +19,7 @@ export default function Login() {
     }
     const res = await loginUser(email, password);
     setTimeout( function ( ) { alert( "Login satisfactori" ); }, 1000 );
+    navigate("/");
     console.log("Login submitted:", { email, password });
   };
 

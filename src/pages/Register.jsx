@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authProvider';
+
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -22,6 +24,7 @@ export default function Register() {
 
     if (res.code == undefined){
       setTimeout( function ( ) { alert( "Registre satisfactori" ); }, 1000 );
+          navigate("/");
     }else{
       StorageError(res.code);
     }

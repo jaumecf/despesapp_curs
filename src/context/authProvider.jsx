@@ -39,6 +39,7 @@ export function AuthProvider({ children }) {
 
     const logOut = () => {
         return signOut(auth);
+        
     };
 
     useEffect(() => {
@@ -49,7 +50,7 @@ export function AuthProvider({ children }) {
         return unsubscribe;
     }, []);
     
-    return <AuthContext.Provider value={{currentUser, registerUser, loginUser, logOut}}>{!loading && children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{currentUser, loading, registerUser, loginUser, logOut}}>{!loading && children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
