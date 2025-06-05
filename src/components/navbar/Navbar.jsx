@@ -17,24 +17,21 @@ export default function Navbar() {
   }
   return (
     <nav className="navbar">
-        <ul>
+        <ul className="navbar-list">
+          <li className="titol"><Link to="/">Despesapp</Link></li>
+          <li><Link to="/">Inici</Link></li>
           {!currentUser ? (
                 <>
-                    
-                    <li className="titol"><Link to="/">Despesapp</Link></li>
-                    <li><Link to="/">Inici</Link></li>
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/register">Register</Link></li>
+                  <li className="spacer"></li>
+                  <li><Link to="/login">Login</Link></li>
+                  <li><Link to="/register">Register</Link></li>
                 </>
             ) : (
                 <>
-                    <li className="titol"><Link to="/">Despesapp</Link></li>
-                    <li><Link to="/">Inici</Link></li>
-                    <li><Link to="/projects">Projectes</Link></li>
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/register">Register</Link></li>
-                    <button className="logout-button" onClick={handleLogout}>Logout</button>
-                    <span className="navbar-username">Hola, <b>{currentUser.username || currentUser.email}</b></span>
+                  <li><Link to="/projects">Projectes</Link></li>
+                  <li className="spacer"></li>
+                  <li><button className="logout-button" onClick={handleLogout}>Logout</button></li>
+                  <li><span className="navbar-username">Hola, <b>{currentUser.username || currentUser.email}</b></span></li>
                 </>
             )}
         </ul>
