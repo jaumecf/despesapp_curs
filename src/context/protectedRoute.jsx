@@ -6,8 +6,8 @@ export default function ProtectedRoute({ children }) {
     const { currentUser, loading} = useAuth();
 
 
-  console.log("🔐 [ProtectedRoute] loading:", loading);
-  console.log("🔐 [ProtectedRoute] currentUser:", currentUser);
+  //console.log("🔐 [ProtectedRoute] loading:", loading);
+  //console.log("🔐 [ProtectedRoute] currentUser:", currentUser);
     if (loading) return <div>Carregant...</div>; // o spinner, etc.
     return currentUser ? children : <Navigate to="/login" replace />;
 }

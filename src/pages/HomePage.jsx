@@ -40,14 +40,14 @@ export default function HomePage() {
                     {projects.map((p) => (
                     <tr key={p.id}>
                         <td>
-                        <Link to={`/projecte/${p.id}`} style={{ textDecoration: 'none', fontWeight: 'bold' }}>
+                        <Link to={`/project/${p.id}`} style={{ textDecoration: 'none', fontWeight: 'bold' }}>
                             {p.nom}
                         </Link>
                         </td>
                         <td>
                         <div style={{ display: 'flex', gap: '0.5rem' }}>
                             <Link
-                            to={`/editar-projecte/${p.id}`}
+                            to={`/edit-project/${p.id}`}
                             className="btn btn-secondary btn-sm"
                             >
                             Edita

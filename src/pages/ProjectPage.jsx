@@ -1,42 +1,31 @@
 import { useState, useEffect } from 'react';
-
+import { useParams, useNavigate } from 'react-router-dom';
 import DespesesLlista from '../components/despesesLlista/DespesesLlista';
 import Modal from '../components/modal/Modal';
 import DespesaForm from '../components/despesaForm/DespesaForm';
 
-import { onGetCollection, deleteDespesa, saveDespesa } from '../firebase/firebase';
+import { onGetDespeses, deleteDespesa, saveDespesa } from '../firebase/firebase';
 import { useCollection } from '../hooks/useCollection';
 
 export default function ProjectPage() {
+    const { id } = useParams();
     const [mostraModal, setMostraModal] = useState(false);
-    const { documents: despeses } = useCollection('despeses');
+    const { documents: despeses } = useCollection(id);
     //const [despeses, setDespeses] = useState(null);
 
-    useEffect(() => {
-        const unsubscribe = onGetCollection("despeses", (querySnapshot) => {
-            let resultats = [];
-
-            querySnapshot.forEach((doc) => {
-                resultats.push({ ...doc.data(), id: doc.id });
-            });
-
-            console.log(resultats);
-            //setDespeses(resultats);
-        });
-        return () => unsubscribe();
-    }, []);
-
     const afegirDespesa = (despesa) => {
-        saveDespesa(despesa).then(() => {
+        console.log(id);
+        saveDespesa(id, despesa).then(() => {
+            
             //setDespeses([...despeses, despesa]);
-            setModal(false);
+            setMostraModal(false);
         }).catch((error) => {
             console.log("Error afegint la despesa: ", error);
         });
     }
 
     const eliminarDespesa = (id) => {
-        deleteDespesa(id).then(() => {
+        deleteDespesa(id, id).then(() => {
         //setDespeses(despeses.filter((d) => d.id !== id));
         console.log("Despesa eliminada");
         }

@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
-import { onGetCollection } from "../firebase/firebase"
+import { onGetDespeses } from "../firebase/firebase"
 import { QuerySnapshot } from "firebase/firestore";
 
-export const useCollection = (collectionName)=>{
+export const useCollection = (projectId)=>{
 
     const [documents, setDocuments] = useState(null);
 
     useEffect(()=>{
-        const unsubscribe = onGetCollection(collectionName, (querySnapshot) => {
+        const unsubscribe = onGetDespeses(projectId, (querySnapshot) => {
             let resultats = [];
             querySnapshot.docs.forEach((doc)=>{
                 resultats.push({...doc.data(), id:doc.id});
@@ -15,7 +15,7 @@ export const useCollection = (collectionName)=>{
             setDocuments(resultats);
         });
         return ()=>unsubscribe();
-    }, [collectionName]);
+    }, [projectId]);
 
     return {documents};
 }

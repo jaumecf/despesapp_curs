@@ -1,8 +1,7 @@
 import { useContext, createContext, useEffect } from "react";
 import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from 'firebase/auth'; 
 import { useState } from "react";
-import { doc, setDoc } from 'firebase/firestore';
-import { auth } from '../firebase/firebase'; // Adjust the import path as necessary
+import { auth, saveUsuari } from '../firebase/firebase'; // Adjust the import path as necessary
 
 const AuthContext = createContext();
 
@@ -16,10 +15,7 @@ export function AuthProvider({ children }) {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const userId = userCredential.user.uid;
             // Add or overwrite user in Firestore
-            await setDoc(doc(db, 'usuaris', userId), {
-            email: email,
-            username: name,
-            }, { merge: true });
+            await saveUsuari(email, name, userId);
             return userCredential;
         } catch (error) {
             console.error("Error registering user:", error);

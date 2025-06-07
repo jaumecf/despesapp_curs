@@ -29,6 +29,7 @@ export default function Navbar() {
             ) : (
                 <>
                   <li><Link to="/projects">Projectes</Link></li>
+                  <li><Link to="/newproject">Crear Projecte</Link></li>
                   <li className="spacer"></li>
                   <li><button className="logout-button" onClick={handleLogout}>Logout</button></li>
                   <li><span className="navbar-username">Hola, <b>{currentUser.username || currentUser.email}</b></span></li>
