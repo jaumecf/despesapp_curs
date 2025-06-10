@@ -43,7 +43,7 @@ export default function ProjectPage() {
             <h1>Inici</h1>
             {despeses && <DespesesLlista despeses={despeses} eliminarDespesa={eliminarDespesa} />}
             {mostraModal && <Modal handleTancar={handleTancar} >
-                <DespesaForm afegirDespesa={afegirDespesa} />
+                <DespesaForm afegirDespesa={afegirDespesa} idProjecte={id}/>
             </Modal>}
             <div>
                 <button onClick={() => setMostraModal(true)}>Afegir Despesa</button>

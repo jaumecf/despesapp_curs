@@ -1,29 +1,36 @@
 import { useState, useEffect } from 'react';
 import './DespesaForm.css'
-import { getParticipants } from '../../firebase/firebase';
+import { getParticipantsProjecte, getParticipantsDespesa } from '../../firebase/firebase';
 import { useAuth } from '../../context/authProvider';
 import { useParams } from 'react-router-dom';
 
 
 
-export default function DespesaForm({ afegirDespesa }) {
+export default function DespesaForm({ afegirDespesa, idProjecte, idDespesa }) {
 
   const [concepte, setConcepte] = useState("");
   const [quantia, setQuantia] = useState("");
   const [pagatPer, setPagatPer] = useState("");
-  const [participants, setParticipants] = useState([]);
+  const [participantsProjecte, setParticipantsProjecte] = useState([]);
+  const [participantsDespesa, setParticipantsDespesa] = useState([]);
   const { currentUser } = useAuth();
-  const { id } = useParams();
 
   useEffect(() => {
-    const carregarParticipants = async () => {
-      const usuarisList = await getParticipants(id);
-      console.log("Participants:", usuarisList);
-      setParticipants(usuarisList);
+    const carregarParticipantsProjecte = async () => {
+      const participantsProjecte = await getParticipantsProjecte(idProjecte);
+      setParticipantsProjecte(participantsProjecte);
     
     };
-    carregarParticipants();
-  }, [currentUser]);
+    const carregarParticipantsDespesa = async () => {
+      const participantsDespesa = await getParticipantsDespesa(idProjecte, idDespesa);
+      setParticipantsDespesa(participantsDespesa);
+    
+    };
+    carregarParticipantsProjecte();
+    if(idDespesa != undefined) {
+      carregarParticipantsDespesa();
+    }
+  }, []);
 
   const resetForm = () => {
     setConcepte("");
@@ -38,7 +45,8 @@ export default function DespesaForm({ afegirDespesa }) {
       concepte: concepte,
       quantia: quantia,
       pagatPer: pagatPer,
-      id: Math.floor(Math.random() * 1000)
+      id: Math.floor(Math.random() * 1000),
+      participants: participantsDespesa,
     }
     afegirDespesa(despesa);
     resetForm();
@@ -46,8 +54,7 @@ export default function DespesaForm({ afegirDespesa }) {
 
   // Afegeix o elimina un participant per a pagar
   const toggleParticipant = (uid) => {
-    if (uid === currentUser.uid) return; // no permet desmarcar-se a si mateix
-    setParticipants(prev =>
+    setParticipantsDespesa(prev =>
       prev.includes(uid)
         ? prev.filter(id => id !== uid)
         : [...prev, uid]
@@ -68,7 +75,7 @@ export default function DespesaForm({ afegirDespesa }) {
             <span>Pagat per</span>
               <select onChange={(e) => setPagatPer(e.target.value)} value={pagatPer}>
                 <option value="">-- Selecciona qui ha pagat --</option>
-                {participants.map((usuari) => (
+                {participantsProjecte.map((usuari) => (
                   <option key={usuari.uid} value={usuari.uid}>
                     {usuari.uid === currentUser.uid ? '(Tu)' : usuari.username}
                   </option>
@@ -76,22 +83,23 @@ export default function DespesaForm({ afegirDespesa }) {
               </select>
         </label>
         <div className="form-group">
-                <strong>Dividir entre:</strong>
-                <div style={{ marginLeft: '1rem' }}>
-                    {participants.map((usuari) => {
-                        console.log("Usuari:", usuari.uid);
-                        return (
-                        <label key={usuari.uid} style={{ display: 'block' }}>
-                            <input
-                                type="checkbox"
-                                className="input-field"
-                                onChange={() => toggleParticipant(usuari.uid)}
-                            />
-                            {usuari.uid === currentUser.uid ? '(Tu)' :  usuari.username}
-                        </label>
-                    )})}
-                </div>
-            </div>
+          <strong>Dividir entre:</strong>
+          <div style={{ marginLeft: '1rem' }}>
+            {participantsProjecte.map((usuari) => {
+              console.log("Usuari:", usuari.uid);
+              return (
+                <label key={usuari.uid} className="form-label">
+                  <input
+                      type="checkbox"
+                      className="input-field"
+                      checked={participantsDespesa.includes(usuari.uid)}
+                      onChange={() => toggleParticipant(usuari.uid)}
+                  />
+                  {usuari.uid === currentUser.uid ? '(Tu)' :  usuari.username}
+                </label>
+              )})}
+          </div>
+        </div>
         <button>Afegir</button>
     </form>
   )

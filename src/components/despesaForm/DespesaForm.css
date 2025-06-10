@@ -1,9 +1,12 @@
-.despesa-form label,
 .despesa-form input {
-    display: block;
+    display: inline-block;
     text-align: left;
-    width: 100%;
-    margin: 10px auto;
+    margin: 0 0.3rem 0 0;
     box-sizing: border-box;
     font-size: 1.2em;
+}
+.despesa-form label {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem; /* separació entre checkbox i text */
 }

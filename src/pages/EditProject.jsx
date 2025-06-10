@@ -58,30 +58,23 @@ return (
                 </label>
             </div>
             <div className="form-group">
-  <strong>Participants:</strong>
-  {usuaris.map(u => (
-    <label
-      key={u.uid}
-      className="form-label"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.5rem',
-        marginBottom: '0.5rem',
-        fontWeight: 'normal',
-      }}
-    >
-      <input
-        type="checkbox"
-        checked={participants.includes(u.uid)}
-        onChange={() => toggleParticipant(u.uid)}
-        style={{ margin: 0 }}
-      />
-      {u.username}
-    </label>
-  ))}
-</div>
-
+                <strong>Participants:</strong>
+                {usuaris.map(u => (
+                    <label
+                    key={u.uid}
+                    className="form-label"
+                    style={{ display: 'block' }}
+                    >
+                    <input
+                        type="checkbox"
+                        checked={participants.includes(u.uid)}
+                        onChange={() => toggleParticipant(u.uid)}
+                        style={{ margin: 0 }}
+                    />
+                    {u.username}
+                    </label>
+                ))}
+            </div>
             <button type="submit" className="submit-button">Actualitzar</button>
         </form>
     </div>

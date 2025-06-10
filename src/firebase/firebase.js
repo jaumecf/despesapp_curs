@@ -17,8 +17,21 @@ export const auth = getAuth(app);
 export const onGetDespeses = (projecteId, callback) =>
   onSnapshot(collection(db, "projectes", projecteId, "despeses"), callback);
 
-export const onGetDespesa = (id, callback) =>
+export const onGetDespesa = (projecteId, id, callback) =>
   onSnapshot(doc(db, "projectes", projecteId, "despeses", id), callback);
+
+export const getParticipantsDespesa = async (projecteId, id) => {
+  const docRef = doc(db, "projectes", projecteId, "despeses", id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    const participantsDespesaPromises = data.participants.map(uid =>  getUsuari(uid));
+    const participantsDespesa = await Promise.all(participantsDespesaPromises);
+    return participantsDespesa;
+  } else {
+    return [];
+  }
+}
 
 export const saveDespesa = async (projecteId, despesa) => {
   //console.log(projecteId);
@@ -39,8 +52,8 @@ export const getProjectes = () =>
 export const getProjecte = (id) =>
   getDoc(doc(db, "projectes", id));
 
-export const getParticipants = async (projectId) => {
-  const docRef = doc(db, "projectes", projectId);
+export const getParticipantsProjecte = async (projecteId) => {
+  const docRef = doc(db, "projectes", projecteId);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     const data = docSnap.data();
