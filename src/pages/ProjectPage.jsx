@@ -24,8 +24,8 @@ export default function ProjectPage() {
         });
     }
 
-    const eliminarDespesa = (id) => {
-        deleteDespesa(id, id).then(() => {
+    const eliminarDespesa = (idProjecte, idDespesa) => {
+        deleteDespesa(idProjecte, idDespesa).then(() => {
         //setDespeses(despeses.filter((d) => d.id !== id));
         console.log("Despesa eliminada");
         }
@@ -41,7 +41,7 @@ export default function ProjectPage() {
     return (
         <div>
             <h1>Inici</h1>
-            {despeses && <DespesesLlista despeses={despeses} eliminarDespesa={eliminarDespesa} />}
+            {despeses && <DespesesLlista idProjecte={id} despeses={despeses} eliminarDespesa={eliminarDespesa} />}
             {mostraModal && <Modal handleTancar={handleTancar} >
                 <DespesaForm afegirDespesa={afegirDespesa} idProjecte={id}/>
             </Modal>}

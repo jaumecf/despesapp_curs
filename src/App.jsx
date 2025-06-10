@@ -29,7 +29,7 @@ function App() {
               <Route path="/newproject" element={<ProtectedRoute><NewProject /></ProtectedRoute>} />
               <Route path='/project/:id' element={<ProtectedRoute><ProjectPage /></ProtectedRoute>} />
               <Route path='/edit-project/:id' element={<ProtectedRoute><EditProject /></ProtectedRoute>} />
-              <Route path='/despesa/:id' element={<ProtectedRoute><DespesesDetall /></ProtectedRoute>} />
+              <Route path='/despesa/:idProjecte/:idDespesa' element={<ProtectedRoute><DespesesDetall /></ProtectedRoute>} />
               <Route path='*' element={<Navigate to="/" replace />} />
             </Routes>
         </AuthProvider>
